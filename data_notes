@@ -1,0 +1,60 @@
+DESCRIPTION:
+Some notes from looking at scatterplots of each variable vs the target variable, as well as histograms/distributions of each variable.
+
+Utilities:
+Only one value is present in the training dataset. Likely drop.
+
+Condition2:
+One value holds vast majority. Likely drop.
+
+MSSubClass:
+Useful as a categorical, but need to convert to string first. Default type is int64.
+
+-----------------------------------
+*OverallQual:
+Power transformation might be appropriate. maybe ^2
+
+MasVnrArea:
+Weakly positive. Would require a lot of nan filling work.
+
+BsmtFinSF1:
+Power relationship. Would require nan filling.
+
+*TotalBsmtSF:
+Good candidate. Would need a power fit.
+
+1stFlrSF:
+Good candidate. Would need a power fit. Probably redundant with GrLivArea.
+
+2ndFlrSF:
+Moderate positive correlation, linear fit. Lots of zero values that I'm not quite sure how to deal with. Probably redundant with GrLivArea.
+
+*GrLivArea:
+Good candidate as-is for linear fit.
+
+*FullBath:
+Only 4 possible values, but I think a linear fit would work fine.
+
+TotRmsAbvGrd:
+Good candidate. Linear fit.
+
+GarageYrBlt:
+Positive correlation. Probably require exp fit. Not sure how to deal with zeros.
+
+GarageCars:
+Good candidate. Linear fit.
+
+*GarageArea:
+Probably redundant to GarageCars. Linear fit ok, even with zeros. Pick one or other.
+
+MoSold:
+Could be useful. Likely not much overlap with other vars. Unsure of fit.
+
+Good candidates for one hot:
+['MSSubClass','MSZoning','LotShape','LandContour','Neighborhood','HouseStyle','Exterior1st','Exterior2nd','MasVnrType','ExterQual','Foundation','BsmtQual','BsmtExposure','HeatingQC','CentralAir','KitchenQual','GarageType','GarageFinish']
+
+^2 fit candidates:
+['OverallQual','TotalBsmtSF']
+
+Good numerical candidates:
+['GrLivArea','FullBath','GarageArea']
