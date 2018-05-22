@@ -81,6 +81,9 @@ def condition_housing_data(df):
     # Based on the YearBuilt being 2006, I assume it should be 2007
     df.loc[df.GarageYrBlt == 2207.0, 'GarageYrBlt'] = 2007.0
 
+    # Convert column to strings. It's categorical data stored as int64
+    df['MSSubClass'] = df['MSSubClass'].astype(str)
+
     # Really only one value present
     df.drop(['Utilities'], axis=1, inplace=True)
 
