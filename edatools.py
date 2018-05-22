@@ -66,13 +66,32 @@ def condition_housing_data(df):
                 'BsmtFinType2', 'FireplaceQu', 'GarageType', 'GarageFinish',
                 'GarageQual', 'GarageCond', 'PoolQC', 'Fence', 'MiscFeature',
                 'MasVnrType']
-    fillzero = ['GarageArea', 'TotalBsmtSF']
 
-    df[fillnone].fillna('none', inplace=True)
-    df['MSZoning'].fillna('RL', inplace=True)
-    
+    fillzero = ['GarageArea', 'TotalBsmtSF', 'LotFrontage', 'MasVnrArea',
+                'BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF',
+                'BsmtFullBath', 'BsmtHalfBath', 'GarageCars', 'GarageArea']
+
+    fillmode = ['Electrical', 'KitchenQual', 'SaleType', 'Exterior1st',
+                'Exterior2nd', 'Functional', 'MasVnrType', 'MSZoning']
+
+    # has some NaNs. Value is highly correlated with YearBuilt
+    df['GarageYrBlt'].fillna(df['YearBuilt'], inplace=True)
+
+    # There seems to be an erroneous value for GarageYrBlt of 2207
+    # Based on the YearBuilt being 2006, I assume it should be 2007
+    df.loc[df.GarageYrBlt == 2207.0, 'GarageYrBlt'] = 2007.0
+
+    # Really only one value present
+    df.drop(['Utilities'], axis=1, inplace=True)
+
     # Apparently this can't be done without looping.
+    for colname in fillnone:
+        df[colname].fillna('none', inplace=True)
+
     for colname in fillzero:
         df[colname].fillna(0, inplace=True)
+
+    for colname in fillmode:
+        df[colname].fillna(df[colname].mode()[0], inplace=True)
 
     return df
