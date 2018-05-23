@@ -1,8 +1,10 @@
 import pandas as pd
+import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
 import seaborn as sns
 import sklearn
+from sklearn.preprocessing import StandardScaler
 
 
 def explore_categorical(df):
@@ -108,3 +110,13 @@ def dummify_data(df):
                        axis=1)
 
     return df_new
+
+
+def normalize_data(df):
+
+    numericals = df.columns[df.dtypes != 'object']
+    skewness = df[numericals].apply(stats.skew)
+    numericals_skewed = numericals[np.abs(skewness) > 2.0]
+    df[numericals_skewed] = df[numericals_skewed].apply(np.log1p)
+
+    return df
