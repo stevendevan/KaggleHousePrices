@@ -98,3 +98,13 @@ def condition_housing_data(df):
         df[colname].fillna(df[colname].mode()[0], inplace=True)
 
     return df
+
+
+def dummify_data(df):
+
+    categoricals = df.columns[df.dtypes == 'object']
+    df_new = df.drop(categoricals, axis=1)
+    df_new = pd.concat([df_new, pd.get_dummies(df[categoricals])],
+                       axis=1)
+
+    return df_new
