@@ -13,8 +13,7 @@ def explore_categorical(df):
     colors = plt.rcParams['axes.prop_cycle'].by_key()['color']
 
     # discard non-object data
-    df_ob = df.loc[:, df.dtypes == 'object']
-    df_ob.fillna('none', inplace=True)
+    df_ob = df.loc[:, df.dtypes == 'object'].fillna('none')
 
     for column in df_ob.columns:
 
