@@ -21,13 +21,26 @@ def explore_categorical(df):
             df_ob[column]).count().sort_values(ascending=False)
 
         fig1, (ax11, ax12) = plt.subplots(1, 2)
+        plt.suptitle(column)
+        plt.title('Feature value counts')
         ax11.bar(values.index, values.values, color=colors)
-        plt.title(column)
+        #plt.title('Feature value counts')
+        ax11.set_xlabel('Feature value')
+        ax11.set_ylabel('Count')
 
         for label in values.index:
+
             data = df.loc[df_ob[column] == label, 'SalePrice'].values
             if len(data) > 1:
                 sns.distplot(data, hist=False, ax=ax12)
+                plt.title('PDF per feature-value')
+                ax12.set_xlabel('SalePrice ($)')
+                ax12.set_ylabel('Relative requency of occurance\n'
+                                'Units are not that useful')
+                ax12.set_yticks([])
+                # Maybe consider CDF as an alternative
+                # data.hist(bins=len(data), cumulative=True,
+                #          density=True, histtype='step')
 
         plt.show()
 
