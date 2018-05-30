@@ -22,9 +22,8 @@ def explore_categorical(df):
 
         fig1, (ax11, ax12) = plt.subplots(1, 2)
         plt.suptitle(column)
-        plt.title('Feature value counts')
         ax11.bar(values.index, values.values, color=colors)
-        #plt.title('Feature value counts')
+        plt.title('Feature value counts')
         ax11.set_xlabel('Feature value')
         ax11.set_ylabel('Count')
 
@@ -55,6 +54,8 @@ def explore_numerical(df):
         plt.scatter(df_num[column].values, df_num['SalePrice'].values,
                     alpha=0.4, edgecolors='none')
         plt.title(column)
+        plt.xlabel(column)
+        plt.ylabel('SalePrice ($)')
         plt.show()
 
 
